@@ -7,7 +7,7 @@ test('Checkbox disables button on first click and enables on second click', () =
 
   /* Element 있는지 여부 체크 */
   const button = screen.getByRole("button", { name: "Button" });
-  const checkbox = screen.getByRole("checkbox");
+  const checkbox = screen.getByRole("checkbox", {name: 'Disable button'});
 
   /* 버튼 및 초기상태 체크 */
   expect(button).toBeEnabled();
