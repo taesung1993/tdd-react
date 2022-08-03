@@ -2,11 +2,23 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
+test('Button color test', () => {
+  render(<App/>);
+
+  const colorButton = screen.getByRole('button', {name: 'Change to blue'});
+
+  expect(colorButton).toHaveStyle({'background-color': 'red'});
+
+  fireEvent.click(colorButton);
+
+    expect(colorButton).toHaveStyle({ "background-color": "blue" });
+});
+
 test('Checkbox disables button on first click and enables on second click', () => {
   render(<App />);
 
   /* Element 있는지 여부 체크 */
-  const button = screen.getByRole("button", { name: "Button" });
+  const button = screen.getByRole("button", { name: "Change to blue" });
   const checkbox = screen.getByRole("checkbox", {name: 'Disable button'});
 
   /* 버튼 및 초기상태 체크 */
@@ -26,4 +38,36 @@ test('Checkbox disables button on first click and enables on second click', () =
   /* 원래 상태로 돌아옴 */
   expect(button).toBeEnabled();
   expect(checkbox).not.toBeChecked();
+});
+
+test('Button\'s color is blue when clicked, but its is grey on first check, also its is blue on second check', () => {
+  render(<App/>);
+
+  const colorButton = screen.getByRole('button', {name: 'Change to blue'});
+  const checkbox = screen.getByRole('checkbox', {name: 'Disable button'});
+
+  /* 체크박스를 한 번 눌렀을 경우, 버튼의 색은 gray */
+  fireEvent.click(checkbox);
+  expect(colorButton).toBeDisabled();
+  expect(colorButton).toHaveStyle({'background-color': 'gray'});
+
+  /* 두 번째 체크 박스를 눌렀을 경우, 원래 색으로 돌아온다. */
+  fireEvent.click(checkbox);
+  expect(colorButton).toBeEnabled();
+  expect(colorButton).toHaveStyle({'background-color': 'red'});
+
+  /* 
+    1. 버튼 클릭(버튼 색: 파란색)
+    2. 체크박스 클릭(버튼 색: 회색)
+    3. 체크박스 다시 클릭(버튼 색: 파란 색)
+  */
+
+    fireEvent.click(colorButton);
+    expect(colorButton).toHaveStyle({'background-color': 'blue'});
+
+    fireEvent.click(checkbox);
+    expect(colorButton).toHaveStyle({'background-color': 'gray'});
+
+    fireEvent.click(checkbox);
+    expect(colorButton).toHaveStyle({'background-color': 'blue'});
 });
