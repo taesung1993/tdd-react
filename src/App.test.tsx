@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
+import {replaceCamelWithSpaces} from './App';
 
 test('Button color test', () => {
   render(<App/>);
@@ -70,4 +71,24 @@ test('Button\'s color is blue when clicked, but its is grey on first check, also
 
     fireEvent.click(checkbox);
     expect(colorButton).toHaveStyle({'background-color': 'blue'});
+});
+
+// Medium Violet Red
+// MidnightBlue
+
+/* Describe 문장을 사용하면 테스트를 그룹화할 수 있다. */
+describe('spaces before camel-case capital leters', () => {
+  test('Works for no inner capital letters', () => {
+    expect(replaceCamelWithSpaces('Red')).toBe('Red');
+  });
+
+  test('Works for one inner capital letter', () => {
+    expect(replaceCamelWithSpaces("MidnightBlue")).toBe("Midnight Blue");
+  });
+
+  test('Work for muliple inner capital letters', () => {
+    expect(replaceCamelWithSpaces("MediumVioletRed")).toBe(
+      "Medium Violet Red"
+    );
+  });
 });
