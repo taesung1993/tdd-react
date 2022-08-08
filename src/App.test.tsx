@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import App from './App';
-import {replaceCamelWithSpaces} from './App';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import App from "./App";
+import { replaceCamelWithSpaces } from "./App";
 
-test('Button color test', () => {
-  render(<App/>);
+test("Button color test", () => {
+  render(<App />);
 
   const colorButton = screen.getByRole("button", {
     name: "Change to Midnight Blue",
@@ -17,14 +17,14 @@ test('Button color test', () => {
   expect(colorButton).toHaveStyle({ "background-color": "MidnightBlue" });
 });
 
-test('Checkbox disables button on first click and enables on second click', () => {
+test("Checkbox disables button on first click and enables on second click", () => {
   render(<App />);
 
   /* Element 있는지 여부 체크 */
   const button = screen.getByRole("button", {
     name: "Change to Midnight Blue",
   });
-  const checkbox = screen.getByRole("checkbox", {name: 'Disable button'});
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
 
   /* 버튼 및 초기상태 체크 */
   expect(button).toBeEnabled();
@@ -45,18 +45,18 @@ test('Checkbox disables button on first click and enables on second click', () =
   expect(checkbox).not.toBeChecked();
 });
 
-test('Button\'s color is blue when clicked, but its is grey on first check, also its is blue on second check', () => {
-  render(<App/>);
+test("Button's color is blue when clicked, but its is grey on first check, also its is blue on second check", () => {
+  render(<App />);
 
   const colorButton = screen.getByRole("button", {
     name: "Change to Midnight Blue",
   });
-  const checkbox = screen.getByRole('checkbox', {name: 'Disable button'});
+  const checkbox = screen.getByRole("checkbox", { name: "Disable button" });
 
   /* 체크박스를 한 번 눌렀을 경우, 버튼의 색은 gray */
   fireEvent.click(checkbox);
   expect(colorButton).toBeDisabled();
-  expect(colorButton).toHaveStyle({'background-color': 'gray'});
+  expect(colorButton).toHaveStyle({ "background-color": "gray" });
 
   /* 두 번째 체크 박스를 눌렀을 경우, 원래 색으로 돌아온다. */
   fireEvent.click(checkbox);
@@ -69,29 +69,27 @@ test('Button\'s color is blue when clicked, but its is grey on first check, also
     3. 체크박스 다시 클릭(버튼 색: 파란 색)
   */
 
-    fireEvent.click(colorButton);
-    expect(colorButton).toHaveStyle({ "background-color": "MidnightBlue" });
+  fireEvent.click(colorButton);
+  expect(colorButton).toHaveStyle({ "background-color": "MidnightBlue" });
 
-    fireEvent.click(checkbox);
-    expect(colorButton).toHaveStyle({'background-color': 'gray'});
+  fireEvent.click(checkbox);
+  expect(colorButton).toHaveStyle({ "background-color": "gray" });
 
-    fireEvent.click(checkbox);
-    expect(colorButton).toHaveStyle({ "background-color": "MidnightBlue" });
+  fireEvent.click(checkbox);
+  expect(colorButton).toHaveStyle({ "background-color": "MidnightBlue" });
 });
 
 /* Describe 문장을 사용하면 테스트를 그룹화할 수 있다. */
-describe('spaces before camel-case capital leters', () => {
-  test('Works for no inner capital letters', () => {
-    expect(replaceCamelWithSpaces('Red')).toBe('Red');
+describe("spaces before camel-case capital leters", () => {
+  test("Works for no inner capital letters", () => {
+    expect(replaceCamelWithSpaces("Red")).toBe("Red");
   });
 
-  test('Works for one inner capital letter', () => {
+  test("Works for one inner capital letter", () => {
     expect(replaceCamelWithSpaces("MidnightBlue")).toBe("Midnight Blue");
   });
 
-  test('Work for muliple inner capital letters', () => {
-    expect(replaceCamelWithSpaces("MediumVioletRed")).toBe(
-      "Medium Violet Red"
-    );
+  test("Work for muliple inner capital letters", () => {
+    expect(replaceCamelWithSpaces("MediumVioletRed")).toBe("Medium Violet Red");
   });
 });
