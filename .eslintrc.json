@@ -1,10 +1,30 @@
 {
-  "plugins": ["testing-library", "jest-dom"],
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest/globals": true
+  },
   "extends": [
-    "react-app",
-    "react-app/jest",
-    "plugin:testing-library/recommended",
-    "plugin:testing-library/react",
-    "plugin:jest-dom/recommended"
-  ]
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "jest"],
+  "rules": {
+    "quotes": ["error", "single"],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
+    "react/react-in-jsx-scope": "off"
+  }
 }
