@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import ScoopOption from './ScoopOption';
 import ToppingOption from './ToppingOption';
+import AlertBanner from '../common/AlertBanner';
 
 interface Props {
   optionType: string;
@@ -10,6 +11,7 @@ interface Props {
 
 export default function Options({ optionType }: Props) {
   const [items, setItems] = useState<any[]>([]);
+  const [error, setError] = useState(false);
   // optionType is 'scoops' and 'toppings'
   useEffect(() => {
     axios
@@ -19,12 +21,15 @@ export default function Options({ optionType }: Props) {
       })
       .catch((error) => {
         // TODO: handle error response
-        console.log(error);
+        setError(true);
       });
   }, [optionType]);
 
-  // TODO: replace 'null' with ToppingOption when available
+  if (error) {
+    return <AlertBanner />;
+  }
 
+  // TODO: replace 'null' with ToppingOption when available
   const ItemComponent = optionType === 'scoops' ? ScoopOption : ToppingOption;
   const optionItems = items.map((item, index) => (
     <ItemComponent key={index} name={item.name} imagePath={item.imagePath} />
