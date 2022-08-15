@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 
 export default function SummaryForms() {
   const [tcChecked, setTcChecked] = useState<boolean>(false);
-  const checkboxLabel = 'Terms and Conditions';
+  const checkboxLabel = (
+    <OverlayTrigger placement="right" overlay={popover}>
+      <span>Terms and Conditions</span>
+    </OverlayTrigger>
+  );
 
   return (
     <section>
@@ -24,5 +28,14 @@ export default function SummaryForms() {
         </Button>
       </Form>
     </section>
+  );
+}
+
+function popover() {
+  return (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Popover right</Popover.Header>
+      <Popover.Body>No ice cream will actually be delivered</Popover.Body>
+    </Popover>
   );
 }
