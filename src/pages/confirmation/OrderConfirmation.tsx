@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useOrderDetails } from '../../contexts/OrderDetail';
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 
 export default function OrderConfirmation({ setOrderPhase }: any) {
   const [, , resetOrder] = useOrderDetails();
   const [orderNumber, setOrderNumber] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     axios
@@ -15,6 +16,7 @@ export default function OrderConfirmation({ setOrderPhase }: any) {
       })
       .catch((error) => {
         // TODO: handle error here
+        setError(true);
       });
   }, []);
 
@@ -22,6 +24,14 @@ export default function OrderConfirmation({ setOrderPhase }: any) {
     resetOrder();
 
     setOrderPhase('inProgress');
+  }
+
+  if (error) {
+    return (
+      <Alert variant={'danger'}>
+        <p>An unexpected error occurred. Please try again later</p>
+      </Alert>
+    );
   }
 
   if (orderNumber) {
