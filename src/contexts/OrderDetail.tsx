@@ -35,11 +35,12 @@ export function OrderDetailsProvider(props: any) {
       newItemCount: number,
       optionType: string
     ) {
+      const count = +newItemCount;
       const newOptionCounts = { ...optionCounts };
 
       // update option count for this item with the new value
       const optionCountsMap = newOptionCounts[optionType];
-      optionCountsMap.set(itemName, +newItemCount);
+      optionCountsMap.set(itemName, count);
 
       setOptionCounts(newOptionCounts);
     }
