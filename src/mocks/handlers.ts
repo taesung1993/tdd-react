@@ -31,18 +31,7 @@ export const handlers = [
     );
   }),
 
-  // rest.get('http://localhost:3030/toppings', (req, res, ctx) => {
-  //   return res(
-  //     ctx.json([
-  //       {
-  //         name: 'Hot fudge',
-  //         imagePath: '/images/hot-fudge.png',
-  //       },
-  //       {
-  //         name: 'Peanut butter cups',
-  //         imagePath: '/images/peanut-butter-cups.png',
-  //       },
-  //     ])
-  //   );
-  // }),
+  rest.post('http://localhost:3030/order', (req, res, ctx) => {
+    return res(ctx.json({ orderNumber: 123455676 }));
+  }),
 ];

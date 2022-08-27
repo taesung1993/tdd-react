@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 test('Initial Conditions', () => {
   render(<SummaryForms />);
   const checkbox = screen.getByRole('checkbox', {
-    name: 'Terms and Conditions',
+    name: /terms and conditions/i,
   });
 
   const button = screen.getByRole('button', {
@@ -13,7 +13,7 @@ test('Initial Conditions', () => {
   });
 
   expect(checkbox).not.toBeChecked();
-  expect(button).toBeEnabled();
+  expect(button).toBeDisabled();
 });
 
 test('Button is disabled on first checked and Button is enabled on second checked', async () => {
@@ -27,10 +27,10 @@ test('Button is disabled on first checked and Button is enabled on second checke
   });
 
   await userEvent.click(checkbox);
-  expect(button).toBeDisabled();
+  expect(button).toBeEnabled();
 
   await userEvent.click(checkbox);
-  expect(button).toBeEnabled();
+  expect(button).toBeDisabled();
 });
 
 test('popover responds to hover', async () => {

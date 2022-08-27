@@ -1,17 +1,32 @@
 import { useState } from 'react';
 import { Form, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 
-export default function SummaryForms() {
+export default function SummaryForms({ setOrderPhase }: any) {
   const [tcChecked, setTcChecked] = useState<boolean>(false);
+
+  function handleSubmit(event: any) {
+    event.preventDefault();
+    setOrderPhase('completed');
+  }
+
+  const popover = (
+    <Popover id="termsandconditions-popover">
+      <Popover.Body>No ice cream will actually be delivered</Popover.Body>
+    </Popover>
+  );
+
   const checkboxLabel = (
-    <OverlayTrigger placement="right" overlay={popover}>
-      <span>Terms and Conditions</span>
-    </OverlayTrigger>
+    <span>
+      I agree to
+      <OverlayTrigger placement="right" overlay={popover}>
+        <span style={{ color: 'blue' }}>Terms and Conditions</span>
+      </OverlayTrigger>
+    </span>
   );
 
   return (
     <section>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Check
             id="terms-of-condition-check"
@@ -23,19 +38,10 @@ export default function SummaryForms() {
             {checkboxLabel}
           </Form.Label>
         </Form.Group>
-        <Button variant="primary" type="submit" disabled={tcChecked}>
+        <Button variant="primary" disabled={!tcChecked} type="submit">
           Confirm Order
         </Button>
       </Form>
     </section>
-  );
-}
-
-function popover() {
-  return (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3">Popover right</Popover.Header>
-      <Popover.Body>No ice cream will actually be delivered</Popover.Body>
-    </Popover>
   );
 }
