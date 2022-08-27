@@ -1,7 +1,7 @@
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface Props {
   name: string;
@@ -14,9 +14,20 @@ export default function ScoopOption({
   imagePath,
   updateItemCount,
 }: Props) {
+  const [isValid, setIsValid] = useState(true);
+
   const handleChange = (event: ChangeEvent) => {
     const target = event.target as HTMLInputElement;
-    updateItemCount(name, +target.value);
+    const currentValue = target.value;
+    updateItemCount(name, +currentValue);
+
+    const currentValueFloat = parseFloat(currentValue);
+
+    setIsValid(
+      0 <= currentValueFloat &&
+        currentValueFloat <= 10 &&
+        Math.floor(currentValueFloat) === currentValueFloat
+    );
   };
 
   return (
@@ -39,6 +50,7 @@ export default function ScoopOption({
             type="number"
             defaultValue={0}
             onChange={handleChange}
+            isInvalid={!isValid}
           ></Form.Control>
         </Col>
       </Form.Group>
