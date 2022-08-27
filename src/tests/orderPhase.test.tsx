@@ -60,6 +60,9 @@ test('order pahses for happy path', async () => {
   });
   await userEvent.click(confirmOrderButton);
 
+  const loading = screen.getByText(/loading/i);
+  expect(loading).toBeInTheDocument();
+
   const thankYouHeader = await screen.findByRole('heading', {
     name: /thank you!/i,
   });
